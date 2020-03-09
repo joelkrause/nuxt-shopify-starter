@@ -1,9 +1,11 @@
 <template>
   <main>
     <h1>{{collection.title}}</h1>
-    <pre>
-      {{collection}}
-    </pre>
+    <div class="products">
+      <div class="collection" v-for="product in collection.products" :key="product.index">
+        <nuxt-link :to="`/product/${product.handle}`">{{product.title}}</nuxt-link>
+      </div>
+    </div>
     <Footer />
   </main>
 </template>
@@ -17,6 +19,9 @@ export default {
     Footer
   },
   computed: {
+    products(){
+      return this.$store.state.products;
+    },
     collections(){
       return this.$store.state.collections;
     },
