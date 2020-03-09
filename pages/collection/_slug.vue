@@ -1,8 +1,8 @@
 <template>
   <main>
-    <h1>Home</h1>
+    <h1>{{collection.title}}</h1>
     <pre>
-      {{products}}
+      {{collection}}
     </pre>
     <Footer />
   </main>
@@ -17,12 +17,17 @@ export default {
     Footer
   },
   computed: {
-    products() {
-      return this.$store.state.products;
-    },
     collections(){
       return this.$store.state.collections;
+    },
+    collection(){
+        return this.collections.find(el => el.handle === this.slug);
     }
+  },
+  data() {
+    return {
+      slug: this.$route.params.slug
+    };
   },
 }
 </script>
