@@ -1,14 +1,14 @@
 <template>
     <nav class="site__nav">
         <ul>
-            <li v-for="item in menus" :key="1">
-                <nuxt-link :to="item.slug">{{ item.title }} <span class="arrow" v-if="item.child_items">&darr;</span></nuxt-link>
-                <ul v-if="item.child_items" class="sub-menu">
-                    <li v-for="item in item.child_items" :key="1">
-                        <nuxt-link :to="item.slug">{{ item.title }}</nuxt-link>
-                    </li>
-                </ul>
-            </li>
+          <li>
+            <nuxt-link to="/collection">Collections <span class="arrow">&darr;</span></nuxt-link>
+            <ul class="sub-menu">
+              <li>
+                <nuxt-link to="/collection/test">Test</nuxt-link>
+              </li>
+            </ul>
+          </li>
         </ul>
     </nav>
 </template>
@@ -20,13 +20,5 @@ export default {
   components: {
     Footer
   },
-computed: {
-  menus() {
-    return this.$store.state.menus;
-  },
- },
-created() {
-  this.$store.dispatch("getMenu");
-},
 };
 </script>

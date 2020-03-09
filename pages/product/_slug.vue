@@ -2,6 +2,11 @@
   <main>
     <h1>{{product.title}}</h1>
     <h2>${{product.variants[0].price}}</h2>
+    
+    <form>
+      <input type="number" name="qty" min="1" value="1" />
+      <button type="button" :data-id="product.id">Add To Cart</button>
+    </form>
     <Footer />
   </main>
 </template>
