@@ -6,17 +6,20 @@
           </nuxt-link>
         </div>
         <Navigation />
+        <Cart />
     </header>
 </template>
 
 <script>
 import Navigation from '~/components/Navigation.vue'
+import Cart from '~/components/Cart.vue'
 import Logo from '~/components/Logo.vue'
 
 export default {
   components: {
     Navigation,
-    Logo
+    Logo,
+    Cart
   }
 }
 </script>

@@ -1,6 +1,8 @@
 export const state = () => ({
   products: [],
-  collections: []
+  collections: [],
+  cartContents: [],
+  checkoutID: ''
 })
 
 export const mutations = {
@@ -9,7 +11,19 @@ export const mutations = {
   },
   SET_COLLECTIONS: (state, collections) => {
       state.collections = collections
-  }
+  },
+  setCheckoutID(state,checkoutID){
+    state.checkoutID = checkoutID
+  },
+	addToCart(state, product) {
+		// Manage duplicates
+		const index = state.cartContents.findIndex(e => e.ID === product.ID)
+		if(index === -1) {
+			state.cartContents.push(product)
+		} else {
+			alert('Already in cart')
+		}
+	}
 }
 
 export const actions = {

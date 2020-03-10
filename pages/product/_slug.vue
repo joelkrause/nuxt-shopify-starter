@@ -20,6 +20,7 @@
           <input v-else type="hidden" :value="product.variants[0].id" />
           <button type="button" :data-id="product.id">Add To Cart</button>
         </form>
+        <button type="button" @click="addToCart(product.variants[0].id)" :data-id="product.id">Add To Cart</button>
         <div v-html="product.descriptionHtml"></div>
       </div>
     </section>
@@ -47,7 +48,23 @@ export default {
     setProduct(event){
       const price = event.target[event.target.selectedIndex].getAttribute('data-price')
       this.price = price
-    }
+    },
+		addToCart(id) {
+      this.$shopify.checkout.create().then(checkout => {
+        this.$store.commit('setCheckoutID', checkout.id)
+        console.log(this.$store.state.checkoutID);
+      });
+      const lineItemsToAdd = [
+        {
+          variantId: id,
+          quantity: 1,
+        },
+      ];
+      this.$shopify.checkout.addLineItems(this.$store.state.checkoutID, lineItemsToAdd).then(checkout => {
+        // Do something with the updated checkout
+        console.log(checkout.lineItems); // Array with one additional line item
+      });
+		},
   },
   data() {
     return {
