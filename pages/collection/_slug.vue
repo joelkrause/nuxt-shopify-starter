@@ -2,9 +2,6 @@
   <main>
     <h1>{{collection.title}}</h1>
     <div class="products">
-      <pre>
-      {{collections}}
-      </pre>
       <div class="collection" v-for="product in collection.products" :key="product.index">
         <nuxt-link :to="`/product/${product.handle}`">{{product.title}}</nuxt-link>
       </div>
