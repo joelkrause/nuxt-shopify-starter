@@ -1,13 +1,4 @@
-import axios from "axios"
-let dynamicRoutes = () => {
-  const routes = axios
-    .get("http://pep-creative.wp/wp-json/wp/v2/pages")
-    .then(res => {
-      return res.data.map(page => `/${page.slug}`)
-    })
-  console.log(routes)
-  return routes
-}
+
 
 export default {
   siteName: 'Nuxt Test',
@@ -38,9 +29,6 @@ export default {
   */
   css: [
   ],
-  generate: {
-    routes: dynamicRoutes
-  },
   /*
   ** Plugins to load before mounting the App
   */
