@@ -8,19 +8,21 @@
       </div>
       <div class="product_header-info">
         <h1>{{product.title}}</h1>
-        <h2>${{product.variants[0].price}}</h2>
+
+        <h2 v-if="this.price">${{this.price}}</h2>
+        <h2 v-else>${{product.variants[0].price}}</h2>
 
         <form>
           <input type="number" name="qty" min="1" value="1" />
-          <select v-if="product.variants.length > 1" id="product_id">
-            <option v-for="variant in product.variants" :key="variant.index" :value="variant.id">{{variant.title}}</option>
+          <select v-if="product.variants.length > 1" id="product_id" @change="setProduct($event)">
+            <option v-for="variant in product.variants" :key="variant.index" :data-id="variant.id" :data-price="variant.price" :value="variant.id">{{variant.title}}</option>
           </select>
           <input v-else type="hidden" :value="product.variants[0].id" />
           <button type="button" :data-id="product.id">Add To Cart</button>
         </form>
+        <div v-html="product.descriptionHtml"></div>
       </div>
     </section>
-    <div v-html="product.descriptionHtml"></div>
     <Footer />
   </main>
 </template>
@@ -41,9 +43,16 @@ export default {
         return this.products.find(el => el.handle === this.slug);
     }
   },
+  methods: {
+    setProduct(event){
+      const price = event.target[event.target.selectedIndex].getAttribute('data-price')
+      this.price = price
+    }
+  },
   data() {
     return {
-      slug: this.$route.params.slug
+      slug: this.$route.params.slug,
+      price: ''
     };
   },
 }
