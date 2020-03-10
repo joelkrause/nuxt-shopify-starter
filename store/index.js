@@ -37,7 +37,6 @@ export const actions = {
   },
   async setCheckoutID({commit}) {
     const checkout_id = await this.$shopify.checkout.create().then(checkout => {
-      console.log(checkout)
       commit('SET_CHECKOUT_URL', checkout.webUrl)
       commit('SET_CHECKOUT_ID', checkout.id)
     });
