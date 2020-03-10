@@ -11,16 +11,17 @@
 
         <h2 v-if="this.price">${{this.price}}</h2>
         <h2 v-else>${{product.variants[0].price}}</h2>
+        {{qty}}
+        {{variantId}}
 
-        <form>
-          <input type="number" name="qty" min="1" value="1" />
-          <select v-if="product.variants.length > 1" id="product_id" @change="setProduct($event)">
+        <form @submit.prevent="addToCart()">
+          <input type="number" v-model="qty" min="1" value="1" />
+          <select v-if="product.variants.length > 1" id="product_id" v-model="variantId" @change="setProduct($event)">
             <option v-for="variant in product.variants" :key="variant.index" :data-id="variant.id" :data-price="variant.price" :value="variant.id">{{variant.title}}</option>
           </select>
-          <input v-else type="hidden" :value="product.variants[0].id" />
-          <button type="button" :data-id="product.id">Add To Cart</button>
+          <input v-else type="hidden" v-model="variantId" />
+          <button type="submit" :data-id="product.id">Add To Cart</button>
         </form>
-        <button type="button" @click="addToCart(product.variants[0].id)" :data-id="product.variants[0].id">Add To Cart</button>
         <div v-html="product.descriptionHtml"></div>
       </div>
     </section>
@@ -42,29 +43,33 @@ export default {
     },
     product(){
         return this.products.find(el => el.handle === this.slug);
-    }
+    },
+  },
+  mounted: function() {
+    this.variantId = this.product.id
   },
   methods: {
     setProduct(event){
       const price = event.target[event.target.selectedIndex].getAttribute('data-price')
       this.price = price
     },
-		addToCart(id) {
-      console.log(this.$store.state.checkoutID)
+		addToCart() {
       const lineItemsToAdd = [
         {
-          variantId: id,
-          quantity: 1,
+          variantId: this.variantId,
+          quantity: this.qty
         },
       ];
-      this.$shopify.checkout.addLineItems(this.$store.state.checkoutID, lineItemsToAdd).then(checkout => {
-        // Do something with the updated checkout
-        console.log(checkout.lineItems); // Array with one additional line item
-      });
+      this.$shopify.checkout.addLineItems(this.$store.state.checkoutID, lineItemsToAdd)
+      this.$store.commit('add', lineItemsToAdd)
 		},
   },
   data() {
     return {
+      // Form
+      qty: 1,
+      variantId: '1',
+
       slug: this.$route.params.slug,
       productId: '',
       price: ''

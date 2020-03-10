@@ -18,7 +18,12 @@ export const mutations = {
   },
   SET_CHECKOUT_URL: (state, checkoutURL) => {
     state.checkoutURL = checkoutURL
-  }
+  },
+  add (state, product) {
+    // Manage duplicates
+    console.log(product)
+    state.cartContents.push(product)
+	}
 }
 
 export const actions = {
