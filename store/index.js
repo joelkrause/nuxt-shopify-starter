@@ -2,7 +2,8 @@ export const state = () => ({
   products: [],
   collections: [],
   cartContents: [],
-  checkoutID: ''
+  checkoutID: '',
+  checkoutURL: '',
 })
 
 export const mutations = {
@@ -14,6 +15,9 @@ export const mutations = {
   },
   SET_CHECKOUT_ID: (state, checkoutID) => {
     state.checkoutID = checkoutID
+  },
+  SET_CHECKOUT_URL: (state, checkoutURL) => {
+    state.checkoutURL = checkoutURL
   }
 }
 
@@ -33,6 +37,8 @@ export const actions = {
   },
   async setCheckoutID({commit}) {
     const checkout_id = await this.$shopify.checkout.create().then(checkout => {
+      console.log(checkout)
+      commit('SET_CHECKOUT_URL', checkout.webUrl)
       commit('SET_CHECKOUT_ID', checkout.id)
     });
   }

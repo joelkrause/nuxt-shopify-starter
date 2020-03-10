@@ -1,12 +1,12 @@
 <template>
-    <button id="cartToggle">Cart{{contents}}</button>
+	<a :href="contents">Checkout</a>
 </template>
 
 <script>
 export default {
 	computed: {
 		contents() {
-			return this.$store.state.cartContents
+			return this.$store.state.checkoutURL
 		}
 	},
 }

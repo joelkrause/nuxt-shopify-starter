@@ -50,6 +50,7 @@ export default {
       this.price = price
     },
 		addToCart(id) {
+      console.log(this.$store.state.checkoutID)
       const lineItemsToAdd = [
         {
           variantId: id,
