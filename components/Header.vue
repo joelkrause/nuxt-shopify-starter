@@ -6,7 +6,8 @@
           </nuxt-link>
         </div>
         <Navigation />
-        <Cart />
+        <button type="button" @click="toggleCart()" class="toggle_cart">Cart</button>
+        <Cart :toggle="toggle" />
     </header>
 </template>
 
@@ -20,6 +21,16 @@ export default {
     Navigation,
     Logo,
     Cart
-  }
+  },
+  computed: {
+    toggle(){
+      return this.$store.state.cartToggle
+    }
+  },
+	methods: {
+		toggleCart() {
+			this.$store.commit('TOGGLE_CART')
+		},
+	}
 }
 </script>

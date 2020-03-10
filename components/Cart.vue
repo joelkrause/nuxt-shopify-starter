@@ -1,13 +1,13 @@
 <template>
-	<div class="cart">
-		<div v-if="cart.length > 1">
+	<div :class="`cart ${toggle ? 'visible' : ''}`">
+		<div v-if="cart.length > 0">
 			{{ cart.length > 1 ? 'items' : 'item' }}
 			<ul>
 				<li v-for="product in cart" :key="product.index">
-					{{product}}
+					<ProductCardSmall :productID="product.productId" :variantID="product.variantId" :qty="product.quantity" :price="product.price" />
 				</li>
 			</ul>
-		<a :href="contents">Checkout</a>
+		<a :href="checkout_url">Checkout</a>
 		</div>
 		<div v-else>
 			Empty
@@ -16,18 +16,20 @@
 </template>
 
 <script>
+import ProductCardSmall from '~/components/Products/ProductCard-Small.vue'
 export default {
+	components:{
+		ProductCardSmall
+	},
+	props: [
+		'toggle'
+	],
 	computed: {
 		cart() {
-			return this.$store.state.cartContents
+			return this.$store.state.cart
 		},
-		contents() {
+		checkout_url() {
 			return this.$store.state.checkoutURL
-		},
-		shopifyCart(){
-			this.$shopify.checkout.fetch(this.$store.state.checkoutID).then(checkout => {
-				return checkout
-			});
 		}
 	}
 }

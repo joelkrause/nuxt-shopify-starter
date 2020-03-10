@@ -23,4 +23,8 @@
     display: flex;
     justify-content: flex-end;
   }
+  .toggle_cart{
+    position: relative;
+    z-index: 9999;
+  }
 }

@@ -13,6 +13,7 @@
         <h2 v-else>${{product.variants[0].price}}</h2>
         {{qty}}
         {{variantId}}
+        {{productId}}
 
         <form @submit.prevent="addToCart()">
           <input type="number" v-model="qty" min="1" value="1" />
@@ -20,10 +21,13 @@
             <option v-for="variant in product.variants" :key="variant.index" :data-id="variant.id" :data-price="variant.price" :value="variant.id">{{variant.title}}</option>
           </select>
           <input v-else type="hidden" v-model="variantId" />
-          <button type="submit" :data-id="product.id">Add To Cart</button>
+          <button type="submit">Add To Cart</button>
         </form>
         <div v-html="product.descriptionHtml"></div>
       </div>
+      <pre>
+{{product}}
+      </pre>
     </section>
     <Footer />
   </main>
@@ -46,7 +50,9 @@ export default {
     },
   },
   mounted: function() {
-    this.variantId = this.product.id
+    this.variantId = this.product.variants[0].id
+    this.productId = this.product.id
+    this.price = this.product.variants[0].price
   },
   methods: {
     setProduct(event){
@@ -54,14 +60,21 @@ export default {
       this.price = price
     },
 		addToCart() {
+      alert(`adding ${this.variantId}`)
       const lineItemsToAdd = [
         {
           variantId: this.variantId,
           quantity: this.qty
         },
       ];
+      const add_item = [{
+        variantId: this.variantId,
+        productId: this.productId,
+        quantity: this.qty,
+        price: this.price
+      }];
       this.$shopify.checkout.addLineItems(this.$store.state.checkoutID, lineItemsToAdd)
-      this.$store.commit('add', lineItemsToAdd)
+      this.$store.commit('SET_CART', add_item)
 		},
   },
   data() {
@@ -69,6 +82,7 @@ export default {
       // Form
       qty: 1,
       variantId: '1',
+      productId: '',
 
       slug: this.$route.params.slug,
       productId: '',

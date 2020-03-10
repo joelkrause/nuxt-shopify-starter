@@ -1,0 +1,26 @@
+.cart {
+    position: fixed;
+    top: 0;
+    right: -25vw;
+    width: 25vw;
+    height: 100vh;
+    overflow: auto;
+    background: #000;
+    z-index: 5;
+    color: white;
+    transition: all 0.5s;
+
+    a {
+        color: white;
+    }
+
+    &.visible {
+        right: 0;
+    }
+
+    .product_card {
+        img {
+            width: 100px;
+        }
+    }
+}
