@@ -20,7 +20,7 @@
           <input v-else type="hidden" :value="product.variants[0].id" />
           <button type="button" :data-id="product.id">Add To Cart</button>
         </form>
-        <button type="button" @click="addToCart(product.variants[0].id)" :data-id="product.id">Add To Cart</button>
+        <button type="button" @click="addToCart(product.variants[0].id)" :data-id="product.variants[0].id">Add To Cart</button>
         <div v-html="product.descriptionHtml"></div>
       </div>
     </section>
@@ -50,10 +50,6 @@ export default {
       this.price = price
     },
 		addToCart(id) {
-      this.$shopify.checkout.create().then(checkout => {
-        this.$store.commit('setCheckoutID', checkout.id)
-        console.log(this.$store.state.checkoutID);
-      });
       const lineItemsToAdd = [
         {
           variantId: id,

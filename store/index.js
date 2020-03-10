@@ -12,18 +12,9 @@ export const mutations = {
   SET_COLLECTIONS: (state, collections) => {
       state.collections = collections
   },
-  setCheckoutID(state,checkoutID){
+  SET_CHECKOUT_ID: (state, checkoutID) => {
     state.checkoutID = checkoutID
-  },
-	addToCart(state, product) {
-		// Manage duplicates
-		const index = state.cartContents.findIndex(e => e.ID === product.ID)
-		if(index === -1) {
-			state.cartContents.push(product)
-		} else {
-			alert('Already in cart')
-		}
-	}
+  }
 }
 
 export const actions = {
@@ -39,5 +30,10 @@ export const actions = {
       const collections = await this.$shopify.collection.fetchAllWithProducts().then(collections => {
         commit('SET_COLLECTIONS', collections)
       });
+  },
+  async setCheckoutID({commit}) {
+    const checkout_id = await this.$shopify.checkout.create().then(checkout => {
+      commit('SET_CHECKOUT_ID', checkout.id)
+    });
   }
 }
