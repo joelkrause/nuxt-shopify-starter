@@ -11,9 +11,6 @@
 
         <h2 v-if="this.price">${{this.price}}</h2>
         <h2 v-else>${{product.variants[0].price}}</h2>
-        {{qty}}
-        {{variantId}}
-        {{productId}}
 
         <form @submit.prevent="addToCart()">
           <input type="number" v-model="qty" min="1" value="1" />
@@ -25,9 +22,6 @@
         </form>
         <div v-html="product.descriptionHtml"></div>
       </div>
-      <pre>
-{{product}}
-      </pre>
     </section>
     <Footer />
   </main>

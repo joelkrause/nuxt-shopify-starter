@@ -1,13 +1,14 @@
 <template>
 	<div :class="`cart ${toggle ? 'visible' : ''}`">
-		<div v-if="cart.length > 0">
-			{{ cart.length > 1 ? 'items' : 'item' }}
-			<ul>
+		<div class="cart-inner" v-if="cart.length > 0">
+			<header>
+			Your Cart
+			{{ cart.length > 1 ? `${cart.length} items` : `${cart.length} item` }}
+			</header>
 			<ProductCardSmall v-for="product in cart" :productData="product" :key="product.index" />
-			</ul>
 		<a :href="checkout_url" class="button secondary">Checkout</a>
 		</div>
-		<div v-else>
+		<div class="cart-inner" v-else>
 			Empty
 		</div>
 	</div>

@@ -4,6 +4,7 @@
         <div class="right">
             <div class="title">{{product.title}}</div>
             <div class="price">${{productData[0].price}} x{{productData[0].quantity}}</div>
+            {{variant}}
         </div>
     </nuxt-link>
 </template>
@@ -19,6 +20,9 @@ export default {
         },
         product(){
             return this.products.find(el => el.id === this.productData[0].productId);
+        },
+        variant(){
+            return this.products.find(el => el.variants.id === this.productData[0].variantId)
         }
     }
 }
