@@ -3,11 +3,9 @@
 		<div v-if="cart.length > 0">
 			{{ cart.length > 1 ? 'items' : 'item' }}
 			<ul>
-				<li v-for="product in cart" :key="product.index">
-					<ProductCardSmall :productID="product.productId" :variantID="product.variantId" :qty="product.quantity" :price="product.price" />
-				</li>
+			<ProductCardSmall v-for="product in cart" :productData="product" :key="product.index" />
 			</ul>
-		<a :href="checkout_url">Checkout</a>
+		<a :href="checkout_url" class="button secondary">Checkout</a>
 		</div>
 		<div v-else>
 			Empty
