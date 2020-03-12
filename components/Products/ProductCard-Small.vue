@@ -2,9 +2,15 @@
     <nuxt-link :to="`/product/${product.handle}`" class="product_card">
         <img :src="product.images[0].src" />
         <div class="right">
-            <div class="title">{{product.title}}</div>
-            <div class="price">${{productData[0].price}} x{{productData[0].quantity}}</div>
-            {{variant}}
+            <div class="title">
+                {{product.title}}
+                <span class="variant" v-if="productData[0].variantName">{{productData[0].variantName}}</span> 
+            </div>
+            <div class="price">${{productData[0].price}}</div>
+            <div class="quantity">
+                <input type="number" :value="productData[0].quantity" />
+            </div>
+            <button type="button" class="remove">Remove</button>
         </div>
     </nuxt-link>
 </template>
